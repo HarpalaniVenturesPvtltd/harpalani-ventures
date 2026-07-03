@@ -10,11 +10,11 @@
 
 /* Base resets & styles for a single-screen immersive teaser */
 html, body, #root {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow-y: auto;
   background-color: #FFFFFF;
 }
 
