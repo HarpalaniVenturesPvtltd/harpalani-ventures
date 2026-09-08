@@ -10,6 +10,7 @@ import {
   CheckCircle2, 
   Cpu
 } from "lucide-react";
+import { Analytics } from "@vercel/analytics/react";
 import TeaserCanvas from "./components/TeaserCanvas";
 
 // --- CINEMATIC REVEAL ANIMATIONS (STAGGERED) ---
@@ -666,6 +667,9 @@ export default function App() {
           </div>
         )}
       </AnimatePresence>
+
+      {/* Vercel Web Analytics */}
+      <Analytics />
     </div>
   );
 }
