@@ -193,12 +193,19 @@ export default function App() {
         animate="visible"
         className="relative z-20 w-full flex flex-col sm:flex-row items-center justify-between gap-4 pointer-events-auto"
       >
-        <div className="flex items-center">
-  <img
-    src="/harpalani-ventures-logo-transparent.png"
-    alt="Harpalani Ventures Pvt. Ltd."
-    className="w-auto h-16 sm:h-20 object-contain"
-  />
+        <div className="flex items-center gap-3">
+  <div className="relative w-9 h-9 flex items-center justify-center rounded-lg bg-white/10 backdrop-blur-md border border-white/20 shadow-[0_4px_12px_rgba(0,0,0,0.02)] overflow-hidden">
+    <div className="absolute inset-0 bg-[#FF5722]/10" />
+    <span className="font-display font-semibold text-xs tracking-tight text-[#FF5722]">HV</span>
+  </div>
+  <div className="flex flex-col text-left">
+    <span className="font-display font-bold text-xs tracking-[0.25em] leading-none text-white">
+      HARPALANI
+    </span>
+    <span className="font-mono text-[8px] tracking-[0.15em] text-[#FF5722] font-semibold uppercase mt-1 leading-none">
+      VENTURES
+    </span>
+  </div>
 </div>
       </motion.header>
 
