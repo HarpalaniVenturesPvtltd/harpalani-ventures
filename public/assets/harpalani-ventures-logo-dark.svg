@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 380" width="100%" height="100%">
+  <defs>
+    <!-- Purple Stem Gradients (Optimized for Dark Backgrounds) -->
+    <linearGradient id="hv-stem-left-dark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="35%" stop-color="#E9D8FD" />
+      <stop offset="70%" stop-color="#9D4EDD" />
+      <stop offset="100%" stop-color="#5A189A" />
+    </linearGradient>
+
+    <linearGradient id="hv-stem-right-dark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="45%" stop-color="#D8B4FE" />
+      <stop offset="85%" stop-color="#7B2CBF" />
+      <stop offset="100%" stop-color="#3C096C" />
+    </linearGradient>
+
+    <linearGradient id="hv-ribbon-outer-dark" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#E0AAFF" />
+      <stop offset="30%" stop-color="#C77DFF" />
+      <stop offset="65%" stop-color="#9D4EDD" />
+      <stop offset="100%" stop-color="#5A189A" />
+    </linearGradient>
+
+    <linearGradient id="hv-ribbon-inner-dark" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#5A189A" />
+      <stop offset="50%" stop-color="#7B2CBF" />
+      <stop offset="100%" stop-color="#E0AAFF" />
+    </linearGradient>
+
+    <linearGradient id="hv-wing-grad-dark" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#5A189A" />
+      <stop offset="35%" stop-color="#9D4EDD" />
+      <stop offset="70%" stop-color="#C77DFF" />
+      <stop offset="90%" stop-color="#E0AAFF" />
+      <stop offset="100%" stop-color="#FFFFFF" />
+    </linearGradient>
+
+    <radialGradient id="hv-shadow-dark" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#C77DFF" stop-opacity="0.35" />
+      <stop offset="60%" stop-color="#7B2CBF" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <filter id="hv-soft-blur-dark" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10" />
+    </filter>
+  </defs>
+
+  <!-- Ambient Glow Under Logo Mark -->
+  <ellipse cx="295" cy="228" rx="140" ry="20" fill="url(#hv-shadow-dark)" filter="url(#hv-soft-blur-dark)" />
+
+  <!-- ==================== HV MONOGRAM ==================== -->
+  <g id="hv-mark-dark">
+    <!-- LEFT STEM OF H -->
+    <path
+      d="M 194 48 L 244 48 C 238 58, 235 68, 235 84 L 235 186 C 235 202, 238 212, 244 222 L 194 222 C 200 212, 203 202, 203 186 L 203 84 C 203 68, 200 58, 194 48 Z"
+      fill="url(#hv-stem-left-dark)"
+    />
+
+    <!-- RIGHT STEM OF H -->
+    <path
+      d="M 268 48 L 318 48 C 312 58, 309 68, 309 84 L 309 186 C 309 202, 312 212, 318 222 L 268 222 C 274 212, 277 202, 277 186 L 277 84 C 277 68, 274 58, 268 48 Z"
+      fill="url(#hv-stem-right-dark)"
+    />
+
+    <!-- 3D FLOWING CROSSBAR RIBBON -->
+    <path
+      d="M 218 142 C 228 120, 248 98, 274 98 C 298 98, 314 114, 328 140 L 340 238 C 336 238, 328 228, 320 206 L 308 148 C 298 126, 286 114, 270 114 C 248 114, 234 130, 222 152 Z"
+      fill="url(#hv-ribbon-inner-dark)"
+    />
+
+    <path
+      d="M 216 138 C 234 104, 258 88, 286 92 C 312 95, 332 118, 345 158 L 342 242 C 338 238, 332 226, 326 202 L 312 144 C 302 118, 288 108, 272 108 C 248 108, 230 128, 216 156 Z"
+      fill="url(#hv-ribbon-outer-dark)"
+    />
+
+    <!-- Highlight Edge -->
+    <path
+      d="M 218 138 C 236 106, 258 92, 284 94 C 308 97, 326 116, 338 152"
+      fill="none"
+      stroke="#FFFFFF"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      opacity="0.9"
+    />
+
+    <!-- ASCENDING V-FLOURISH WING -->
+    <path
+      d="M 336 238 C 342 208, 356 156, 372 108 C 384 72, 396 48, 404 42 C 404 46, 398 68, 390 98 C 382 128, 372 168, 360 208 C 354 228, 344 238, 336 238 Z"
+      fill="url(#hv-wing-grad-dark)"
+    />
+
+    <!-- Wing Highlight Crest -->
+    <path
+      d="M 390 44 C 398 56, 403 66, 404 74 C 401 92, 388 134, 374 174 L 358 218"
+      fill="none"
+      stroke="#FFFFFF"
+      stroke-width="2"
+      stroke-linecap="round"
+      opacity="0.95"
+    />
+  </g>
+
+  <!-- ==================== TYPOGRAPHY LOCKUP (LIGHT ON DARK) ==================== -->
+  <g id="hv-typography-dark" fill="#FFFFFF" text-anchor="middle">
+    <!-- "HARPALANI" in crisp white -->
+    <text
+      x="300"
+      y="282"
+      font-family="'Playfair Display', 'Cinzel', Georgia, serif"
+      font-size="28"
+      font-weight="600"
+      letter-spacing="0.28em"
+      fill="#FFFFFF"
+    >
+      HARPALANI
+    </text>
+
+    <!-- Hairline Rules for "VENTURES" -->
+    <line x1="152" y1="305" x2="228" y2="305" stroke="#EDE5F7" stroke-width="0.85" opacity="0.6" />
+    
+    <!-- "VENTURES" -->
+    <text
+      x="300"
+      y="310"
+      font-family="'Playfair Display', 'Cinzel', Georgia, serif"
+      font-size="16"
+      font-weight="500"
+      letter-spacing="0.42em"
+      fill="#EDE5F7"
+    >
+      VENTURES
+    </text>
+
+    <line x1="372" y1="305" x2="448" y2="305" stroke="#EDE5F7" stroke-width="0.85" opacity="0.6" />
+
+    <!-- "PVT. LTD." -->
+    <text
+      x="300"
+      y="335"
+      font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif"
+      font-size="9.5"
+      font-weight="600"
+      letter-spacing="0.48em"
+      fill="#D8B4FE"
+    >
+      PVT. LTD.
+    </text>
+
+    <!-- "BUILDING WHAT COMES NEXT." -->
+    <text
+      x="300"
+      y="362"
+      font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif"
+      font-size="8.5"
+      font-weight="500"
+      letter-spacing="0.34em"
+      fill="#EDE5F7"
+      opacity="0.85"
+    >
+      BUILDING WHAT COMES NEXT.
+    </text>
+  </g>
+</svg>
