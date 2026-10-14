@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence, useReducedMotion, useScroll, useSpring } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { 
   ArrowRight, 
   ArrowUpRight, 
@@ -45,7 +45,7 @@ const VENTURES_DATA = [
     category: "SaaS Product",
     codeName: "(CODE NAME)",
     description: "An AI-powered quotation SaaS product (code name) engineered to simplify, automate, and elevate how businesses generate, manage, and deliver professional quotations.",
-    badge: "LAUNCHING IN 2027",
+    badge: "LAUNCHING THIS YEAR",
   },
 ];
 
@@ -78,14 +78,6 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeVentureHover, setActiveVentureHover] = useState<string | null>(null);
-
-  // Scroll Progress Tracking for the entire landing page
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 140,
-    damping: 30,
-    restDelta: 0.001,
-  });
 
   // Contact Form State
   const [formData, setFormData] = useState({
@@ -152,19 +144,6 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#FFFFFF] text-[#17131D] font-sans-clean selection:bg-[#32106B] selection:text-white flex flex-col antialiased">
       
-      {/* ===================================================
-          Top Viewport Scroll Progress Bar (Refined Purple Gradient)
-      =================================================== */}
-      <div 
-        className="fixed top-0 left-0 right-0 h-[2.5px] z-[60] pointer-events-none bg-transparent"
-        aria-hidden="true"
-      >
-        <motion.div
-          className="h-full w-full origin-left bg-gradient-to-r from-[#32106B] via-[#6F2DBD] to-[#A855F7] shadow-[0_0_10px_rgba(111,45,189,0.45)]"
-          style={{ scaleX }}
-        />
-      </div>
-
       {/* ===================================================
           4. NAVIGATION (Extremely Refined, Minimal, Elegant)
       =================================================== */}
@@ -315,7 +294,7 @@ export default function App() {
                   transition={{ duration: 0.85, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                   className="font-serif-luxury font-normal text-4xl sm:text-6xl md:text-7xl lg:text-[76px] leading-[1.06] text-[#17131D] tracking-[-0.015em] mb-7 sm:mb-9"
                 >
-                  Building What<br className="hidden sm:inline" /> Comes Next...
+                  Building What<br className="hidden sm:inline" /> Comes Next.
                 </motion.h1>
 
                 {/* Supporting Copy */}
@@ -428,29 +407,12 @@ export default function App() {
 
             {/* Large Horizontal Editorial List (NOT a generic card grid) */}
             <div className="divide-y divide-[#32106B]/12 border-t border-b border-[#32106B]/12">
-              {VENTURES_DATA.map((venture, index) => (
-                <motion.div
+              {VENTURES_DATA.map((venture) => (
+                <div
                   key={venture.id}
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{
-                    duration: 0.6,
-                    delay: index * 0.08,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  whileHover={
-                    shouldReduceMotion
-                      ? undefined
-                      : {
-                          y: -4,
-                          boxShadow: "0 18px 36px -12px rgba(50, 16, 107, 0.08)",
-                          transition: { duration: 0.28, ease: [0.16, 1, 0.3, 1] },
-                        }
-                  }
                   onMouseEnter={() => setActiveVentureHover(venture.id)}
                   onMouseLeave={() => setActiveVentureHover(null)}
-                  className="group py-12 sm:py-16 lg:py-20 transition-colors duration-300 hover:bg-[#F8F6FB]/90 -mx-6 sm:-mx-8 lg:-mx-12 px-6 sm:px-8 lg:px-12 relative cursor-default rounded-xl"
+                  className="group py-12 sm:py-16 lg:py-20 transition-all duration-400 hover:bg-[#F8F6FB]/80 -mx-6 sm:-mx-8 lg:-mx-12 px-6 sm:px-8 lg:px-12 relative cursor-default"
                 >
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
                     
@@ -500,7 +462,7 @@ export default function App() {
                     </div>
 
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
@@ -583,9 +545,9 @@ export default function App() {
               transition={{ duration: 0.85, delay: 0.35 }}
               className="flex flex-col items-center gap-5"
             >
-              {/* LAUNCHING IN 2027 */}
+              {/* LAUNCHING THIS YEAR */}
               <div className="inline-block px-8 py-3 rounded-full bg-white text-[#32106B] font-sans-clean font-bold text-xs sm:text-sm tracking-[0.25em] uppercase shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
-                LAUNCHING IN 2027
+                LAUNCHING THIS YEAR
               </div>
 
               {/* SOON... */}
@@ -790,7 +752,7 @@ export default function App() {
               </div>
               <div>
                 <span className="text-xs font-sans-clean font-semibold tracking-[0.25em] uppercase text-[#6F2DBD]">
-                  Launching in 2027
+                  Launching This Year
                 </span>
               </div>
             </div>
@@ -820,6 +782,31 @@ export default function App() {
                 <p className="font-sans-clean text-base sm:text-lg text-[#17131D]/70 leading-relaxed mb-8 font-light">
                   For business enquiries, partnerships, collaborations, or general enquiries, connect with Harpalani Ventures.
                 </p>
+
+                {/* Primary WhatsApp Card for All Queries */}
+                <div className="p-6 rounded-2xl bg-[#F8F6FB] border border-[#32106B]/15 hover:border-[#6F2DBD] transition-all duration-300 mb-8">
+                  <div className="flex items-center gap-2 mb-2 text-[#6F2DBD]">
+                    <MessageCircle className="w-4 h-4" />
+                    <span className="text-[11px] font-sans-clean font-bold tracking-[0.25em] uppercase">
+                      FOR ALL QUERIES
+                    </span>
+                  </div>
+                  <p className="font-serif-luxury text-xl sm:text-2xl text-[#17131D] font-normal mb-1">
+                    Connect on WhatsApp
+                  </p>
+                  <p className="font-sans-clean text-sm text-[#17131D]/70 mb-4 font-light leading-relaxed">
+                    For all enquiries, proposals, and immediate responses, please connect directly via our official WhatsApp number.
+                  </p>
+                  <a
+                    href="https://wa.me/919549595496"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#32106B] text-white text-xs font-bold tracking-[0.2em] uppercase hover:bg-[#4B168C] transition-colors shadow-sm"
+                  >
+                    <span>+91 95495 95496</span>
+                    <ArrowUpRight className="w-4 h-4" />
+                  </a>
+                </div>
 
                 {/* Direct Communications Grid */}
                 <div className="pt-6 border-t border-[#32106B]/10 space-y-4">
@@ -1029,7 +1016,7 @@ export default function App() {
             <div className="md:col-span-6 flex flex-col items-start text-left">
               <HarpalaniLogo variant="dark" size="lg" layout="horizontal" />
               <p className="font-serif-luxury italic text-base sm:text-lg text-[#EDE5F7] mt-4">
-                Building what comes next...
+                Building what comes next.
               </p>
 
               {/* Direct Footer Contact Details */}
