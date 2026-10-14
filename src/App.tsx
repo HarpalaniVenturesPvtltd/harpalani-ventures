@@ -161,7 +161,7 @@ export default function App() {
       >
         <motion.div
           className="h-full w-full origin-left bg-gradient-to-r from-[#32106B] via-[#6F2DBD] to-[#A855F7] shadow-[0_0_10px_rgba(111,45,189,0.45)]"
-          style={{ scaleX }}
+          style={{ scaleX: shouldReduceMotion ? scrollYProgress : scaleX }}
         />
       </div>
 
@@ -820,6 +820,31 @@ export default function App() {
                 <p className="font-sans-clean text-base sm:text-lg text-[#17131D]/70 leading-relaxed mb-8 font-light">
                   For business enquiries, partnerships, collaborations, or general enquiries, connect with Harpalani Ventures.
                 </p>
+
+                {/* Primary WhatsApp Card for All Queries */}
+                <div className="p-6 rounded-2xl bg-[#F8F6FB] border border-[#32106B]/15 hover:border-[#6F2DBD] transition-all duration-300 mb-8">
+                  <div className="flex items-center gap-2 mb-2 text-[#6F2DBD]">
+                    <MessageCircle className="w-4 h-4" />
+                    <span className="text-[11px] font-sans-clean font-bold tracking-[0.25em] uppercase">
+                      FOR ALL QUERIES
+                    </span>
+                  </div>
+                  <p className="font-serif-luxury text-xl sm:text-2xl text-[#17131D] font-normal mb-1">
+                    Connect on WhatsApp
+                  </p>
+                  <p className="font-sans-clean text-sm text-[#17131D]/70 mb-4 font-light leading-relaxed">
+                    For all enquiries, proposals, and immediate responses, please connect directly via our official WhatsApp number.
+                  </p>
+                  <a
+                    href="https://wa.me/919549595496"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#32106B] text-white text-xs font-bold tracking-[0.2em] uppercase hover:bg-[#4B168C] transition-colors shadow-sm"
+                  >
+                    <span>+91 95495 95496</span>
+                    <ArrowUpRight className="w-4 h-4" />
+                  </a>
+                </div>
 
                 {/* Direct Communications Grid */}
                 <div className="pt-6 border-t border-[#32106B]/10 space-y-4">
