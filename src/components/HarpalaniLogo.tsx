@@ -195,13 +195,13 @@ export const HarpalaniLogo: React.FC<HarpalaniLogoProps> = ({
           PVT. LTD.
         </span>
 
-        {/* BUILDING WHAT COMES NEXT. */}
+        {/* BUILDING WHAT COMES NEXT... */}
         <span
           className={`font-sans-clean font-medium tracking-[0.28em] uppercase text-[7.5px] sm:text-[9px] mt-2 ${
             isDark ? "text-white/60" : "text-[#17131D]/60"
           }`}
         >
-          BUILDING WHAT COMES NEXT.
+          BUILDING WHAT COMES NEXT...
         </span>
       </div>
     );
