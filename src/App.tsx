@@ -238,62 +238,62 @@ export default function App() {
             : "bg-white border-b border-[#32106B]/06 py-5"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 flex items-center justify-between">
-          {/* Official Brand Logo */}
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 flex items-center justify-between h-14 sm:h-16">
+          {/* Brand Logo on Left */}
           <button
             id="nav-logo-btn"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="flex items-center text-left focus:outline-none group cursor-pointer"
+            className="flex items-center text-left focus:outline-none group cursor-pointer shrink-0"
             aria-label="Harpalani Ventures Home"
           >
             <HarpalaniLogo variant="light" size="md" />
           </button>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-10 lg:gap-12" aria-label="Main Corporate Navigation">
+          <nav className="hidden md:flex items-center justify-center gap-8 lg:gap-11" aria-label="Main Corporate Navigation">
             <button
               id="nav-link-ventures"
               onClick={() => scrollToSection("ventures")}
-              className="text-xs font-semibold tracking-[0.22em] text-[#17131D]/80 hover:text-[#32106B] transition-colors uppercase cursor-pointer"
+              className="text-xs font-semibold tracking-[0.22em] text-[#17131D]/80 hover:text-[#32106B] transition-colors uppercase cursor-pointer py-1"
             >
               VENTURES
             </button>
             <button
               id="nav-link-about"
               onClick={() => scrollToSection("about")}
-              className="text-xs font-semibold tracking-[0.22em] text-[#17131D]/80 hover:text-[#32106B] transition-colors uppercase cursor-pointer"
+              className="text-xs font-semibold tracking-[0.22em] text-[#17131D]/80 hover:text-[#32106B] transition-colors uppercase cursor-pointer py-1"
             >
               ABOUT GROUP
             </button>
             <button
               id="nav-link-strategy"
               onClick={() => scrollToSection("strategy")}
-              className="text-xs font-semibold tracking-[0.22em] text-[#17131D]/80 hover:text-[#32106B] transition-colors uppercase cursor-pointer"
+              className="text-xs font-semibold tracking-[0.22em] text-[#17131D]/80 hover:text-[#32106B] transition-colors uppercase cursor-pointer py-1"
             >
               CAPABILITIES
             </button>
             <button
               id="nav-link-methodology"
               onClick={() => scrollToSection("methodology")}
-              className="text-xs font-semibold tracking-[0.22em] text-[#17131D]/80 hover:text-[#32106B] transition-colors uppercase cursor-pointer"
+              className="text-xs font-semibold tracking-[0.22em] text-[#17131D]/80 hover:text-[#32106B] transition-colors uppercase cursor-pointer py-1"
             >
               METHODOLOGY
             </button>
             <button
               id="nav-link-contact"
               onClick={() => scrollToSection("contact")}
-              className="text-xs font-semibold tracking-[0.22em] text-[#17131D]/80 hover:text-[#32106B] transition-colors uppercase cursor-pointer"
+              className="text-xs font-semibold tracking-[0.22em] text-[#17131D]/80 hover:text-[#32106B] transition-colors uppercase cursor-pointer py-1"
             >
               CONTACT
             </button>
           </nav>
 
           {/* Right-Side Primary Action Button */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center justify-end shrink-0">
             <button
               id="nav-cta-btn"
               onClick={() => scrollToSection("contact")}
-              className="px-6 py-2.5 rounded-full bg-[#32106B] hover:bg-[#4B168C] text-white text-[11px] font-semibold tracking-[0.22em] uppercase transition-all duration-300 shadow-[0_4px_16px_rgba(50,16,107,0.18)] hover:shadow-[0_6px_22px_rgba(50,16,107,0.28)] hover:-translate-y-0.5 cursor-pointer"
+              className="px-6 py-2.5 rounded-full bg-[#32106B] hover:bg-[#4B168C] text-white text-[11px] font-semibold tracking-[0.22em] uppercase transition-all duration-300 shadow-[0_4px_16px_rgba(50,16,107,0.18)] hover:shadow-[0_6px_22px_rgba(50,16,107,0.28)] hover:-translate-y-0.5 cursor-pointer flex items-center justify-center leading-none"
             >
               GET IN TOUCH
             </button>
@@ -1192,41 +1192,19 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start justify-between pb-12 border-b border-white/10">
             
-            {/* Left: Brand Identity & Verified Information */}
+            {/* Left: Brand Identity & Vision */}
             <div className="md:col-span-6 flex flex-col items-start text-left">
               <HarpalaniLogo variant="dark" size="lg" layout="horizontal" />
               <p className="font-serif-luxury italic text-base sm:text-lg text-[#EDE5F7] mt-4">
                 Building what comes next.
               </p>
-
-              {/* Direct Footer Contact Details */}
-              <div className="mt-6 pt-6 border-t border-white/10 space-y-2 text-xs font-sans-clean text-white/80">
-                <p className="flex items-center gap-2">
-                  <span className="text-white/50 tracking-wider uppercase text-[10px]">Email:</span>
-                  <a
-                    href="mailto:projectquote14@gmail.com"
-                    className="hover:text-white transition-colors underline underline-offset-2"
-                  >
-                    projectquote14@gmail.com
-                  </a>
-                </p>
-                <p className="flex items-center gap-2">
-                  <span className="text-white/50 tracking-wider uppercase text-[10px]">Phone / WhatsApp:</span>
-                  <a
-                    href="tel:+919549595496"
-                    className="hover:text-white transition-colors"
-                  >
-                    +91 95495 95496
-                  </a>
-                </p>
-                <p className="text-[11px] text-[#D8B4FE] tracking-wide pt-1">
-                  Official WhatsApp for all queries: +91 95495 95496
-                </p>
-              </div>
+              <p className="font-sans-clean text-xs text-white/60 mt-3 max-w-md font-light leading-relaxed">
+                A diversified business group stewarding ventures across retail, apparel couture, brand strategy, digital marketing, and enterprise software.
+              </p>
             </div>
 
-            {/* Navigation & WhatsApp Direct Action */}
-            <div className="md:col-span-6 flex flex-col md:items-end items-start gap-6">
+            {/* Right: Quick Navigation Links */}
+            <div className="md:col-span-6 flex flex-col md:items-end items-start justify-center gap-6 pt-4 md:pt-0">
               <div className="flex flex-wrap items-center gap-6 sm:gap-10">
                 <button
                   onClick={() => scrollToSection("ventures")}
@@ -1247,6 +1225,12 @@ export default function App() {
                   CAPABILITIES
                 </button>
                 <button
+                  onClick={() => scrollToSection("methodology")}
+                  className="text-xs font-semibold tracking-[0.22em] uppercase text-white/80 hover:text-white transition-colors cursor-pointer"
+                >
+                  METHODOLOGY
+                </button>
+                <button
                   onClick={() => scrollToSection("contact")}
                   className="text-xs font-semibold tracking-[0.22em] uppercase text-white/80 hover:text-white transition-colors cursor-pointer"
                 >
@@ -1254,17 +1238,13 @@ export default function App() {
                 </button>
               </div>
 
-              {/* Direct WhatsApp Pill */}
-              <a
-                href="https://wa.me/919549595496"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-semibold tracking-[0.2em] uppercase transition-colors"
+              <button
+                onClick={() => scrollToSection("contact")}
+                className="px-6 py-2.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-semibold tracking-[0.2em] uppercase transition-colors cursor-pointer inline-flex items-center gap-2"
               >
-                <MessageCircle className="w-3.5 h-3.5 text-[#D8B4FE]" />
-                <span>WhatsApp: +91 95495 95496</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-white/60" />
-              </a>
+                <span>Connect With Group</span>
+                <ArrowRight className="w-3.5 h-3.5 text-white/70" />
+              </button>
             </div>
 
           </div>
