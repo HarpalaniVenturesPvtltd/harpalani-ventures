@@ -152,8 +152,17 @@ export default function App() {
     message: "",
   });
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submittedQuery, setSubmittedQuery] = useState(false);
+
+  // Check if user redirected back from FormSubmit after successful submission
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("submitted") === "true") {
+        setSubmittedQuery(true);
+      }
+    }
+  }, []);
 
   // Scroll listener for minimal luxury navigation elevation
   useEffect(() => {
@@ -193,22 +202,11 @@ export default function App() {
   };
 
   const handleContactSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setFormSubmitted(true);
-      setFormData({ 
-        name: "", 
-        email: "", 
-        company: "", 
-        ventureInterest: "General Group Enquiry", 
-        message: "" 
-      });
-      setFormErrors({});
-    }, 600);
+    if (!validateForm()) {
+      e.preventDefault();
+      return;
+    }
+    // Form validation passed — browser performs standard POST to FormSubmit
   };
 
   return (
@@ -1011,35 +1009,58 @@ export default function App() {
 
               {/* Right Column: Corporate Dialogue Form */}
               <div className="lg:col-span-7">
-                {formSubmitted ? (
-                  <div className="p-8 sm:p-12 border border-[#32106B]/15 bg-[#F8F6FB] rounded-2xl text-center space-y-4 shadow-sm">
+                {submittedQuery ? (
+                  <div className="p-8 sm:p-12 border border-[#32106B]/20 bg-[#F8F6FB] rounded-2xl text-center space-y-4 shadow-sm">
                     <div className="w-14 h-14 rounded-full bg-[#EDE5F7] border border-[#32106B]/20 flex items-center justify-center mx-auto text-[#32106B]">
                       <CheckCircle2 className="w-7 h-7" />
                     </div>
                     <h3 className="font-serif-luxury text-2xl font-normal text-[#17131D]">
-                      Enquiry Submitted Successfully
+                      Enquiry Received
                     </h3>
                     <p className="font-sans-clean text-sm text-[#17131D]/75 max-w-md mx-auto leading-relaxed">
-                      Thank you for contacting Harpalani Ventures Pvt. Ltd. Our group leadership will review your message and respond promptly.
+                      Thank you for contacting Harpalani Ventures Pvt. Ltd. Your enquiry has been delivered to projectquote14@gmail.com, and our group leadership will review it promptly.
                     </p>
                     <button
-                      onClick={() => setFormSubmitted(false)}
+                      onClick={() => {
+                        setSubmittedQuery(false);
+                        window.history.replaceState({}, document.title, window.location.pathname);
+                      }}
                       className="mt-4 px-6 py-2.5 rounded-full border border-[#32106B]/25 text-xs font-semibold uppercase tracking-[0.2em] text-[#32106B] hover:bg-[#EDE5F7] transition-colors cursor-pointer"
                     >
                       Submit Another Message
                     </button>
                   </div>
                 ) : (
-                  <form onSubmit={handleContactSubmit} className="space-y-8 text-left" noValidate>
+                  <form 
+                    action="https://formsubmit.co/projectquote14@gmail.com" 
+                    method="POST" 
+                    onSubmit={handleContactSubmit} 
+                    className="space-y-8 text-left" 
+                    noValidate
+                  >
+                    {/* FormSubmit Configuration Fields */}
+                    <input type="hidden" name="_subject" value="New Website Enquiry - Harpalani Ventures" />
+                    <input type="hidden" name="_template" value="table" />
+                    <input type="hidden" name="_captcha" value="false" />
+                    <input 
+                      type="hidden" 
+                      name="_next" 
+                      value={typeof window !== "undefined" ? `${window.location.origin}/?submitted=true#contact` : "https://www.harpalaniventures.com/?submitted=true#contact"} 
+                    />
+                    {/* Honeypot Spam Prevention */}
+                    <input type="text" name="_honey" style={{ display: "none" }} />
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                       {/* Name */}
                       <div>
                         <label htmlFor="contact-name" className="block text-xs font-bold text-[#17131D] uppercase tracking-[0.2em] mb-2">
-                          FULL NAME
+                          FULL NAME *
                         </label>
                         <input
                           id="contact-name"
+                          name="Full Name"
                           type="text"
+                          required
                           placeholder="Your Name"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -1055,11 +1076,13 @@ export default function App() {
                       {/* Email */}
                       <div>
                         <label htmlFor="contact-email" className="block text-xs font-bold text-[#17131D] uppercase tracking-[0.2em] mb-2">
-                          CORPORATE EMAIL
+                          CORPORATE EMAIL *
                         </label>
                         <input
                           id="contact-email"
+                          name="Corporate Email"
                           type="email"
+                          required
                           placeholder="your.email@domain.com"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -1077,11 +1100,13 @@ export default function App() {
                       {/* Organization */}
                       <div>
                         <label htmlFor="contact-company" className="block text-xs font-bold text-[#17131D] uppercase tracking-[0.2em] mb-2">
-                          ORGANIZATION / COMPANY
+                          ORGANIZATION / COMPANY *
                         </label>
                         <input
                           id="contact-company"
+                          name="Organization / Company"
                           type="text"
+                          required
                           placeholder="Company Name"
                           value={formData.company}
                           onChange={(e) => setFormData({ ...formData, company: e.target.value })}
@@ -1101,6 +1126,7 @@ export default function App() {
                         </label>
                         <select
                           id="contact-venture"
+                          name="Venture Focus"
                           value={formData.ventureInterest}
                           onChange={(e) => setFormData({ ...formData, ventureInterest: e.target.value })}
                           className="w-full pb-3 pt-1 border-b border-[#32106B]/20 bg-transparent text-base text-[#17131D] focus:border-[#32106B] transition-colors focus:outline-none cursor-pointer"
@@ -1117,11 +1143,13 @@ export default function App() {
                     {/* Message */}
                     <div>
                       <label htmlFor="contact-message" className="block text-xs font-bold text-[#17131D] uppercase tracking-[0.2em] mb-2">
-                        MESSAGE
+                        MESSAGE *
                       </label>
                       <textarea
                         id="contact-message"
+                        name="Message"
                         rows={3}
+                        required
                         placeholder="Please describe your proposal, partnership, or enquiry..."
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -1139,17 +1167,10 @@ export default function App() {
                       <button
                         id="contact-submit-btn"
                         type="submit"
-                        disabled={isSubmitting}
-                        className="px-8 py-4 rounded-full bg-[#32106B] hover:bg-[#4B168C] text-white text-xs font-semibold tracking-[0.25em] uppercase transition-all duration-300 shadow-[0_6px_20px_rgba(50,16,107,0.18)] disabled:opacity-60 cursor-pointer inline-flex items-center gap-3"
+                        className="px-8 py-4 rounded-full bg-[#32106B] hover:bg-[#4B168C] text-white text-xs font-semibold tracking-[0.25em] uppercase transition-all duration-300 shadow-[0_6px_20px_rgba(50,16,107,0.18)] hover:shadow-[0_8px_26px_rgba(50,16,107,0.28)] hover:-translate-y-0.5 cursor-pointer inline-flex items-center gap-3"
                       >
-                        {isSubmitting ? (
-                          <span>PROCESSING...</span>
-                        ) : (
-                          <>
-                            <span>SUBMIT ENQUIRY</span>
-                            <ArrowRight className="w-4 h-4" />
-                          </>
-                        )}
+                        <span>SUBMIT ENQUIRY</span>
+                        <ArrowRight className="w-4 h-4" />
                       </button>
 
                       <p className="text-xs font-sans-clean text-[#17131D]/60 mt-4 leading-relaxed">
