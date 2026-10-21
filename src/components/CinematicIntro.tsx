@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
 import { ChevronDown } from "lucide-react";
 
@@ -8,16 +8,34 @@ interface CinematicIntroProps {
 
 export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onExploreClick }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const shouldReduceMotion = useReducedMotion();
+  const [videoError, setVideoError] = useState(false);
 
-  // Scroll tracking within the dedicated 180vh scroll container
+  // Attempt video playback safely across all mobile & desktop browsers
+  useEffect(() => {
+    if (videoRef.current && !shouldReduceMotion) {
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // In case of browser autoplay blocking, ensure it remains muted and plays
+          if (videoRef.current) {
+            videoRef.current.muted = true;
+            videoRef.current.play().catch(() => {});
+          }
+        });
+      }
+    }
+  }, [shouldReduceMotion]);
+
+  // Scroll tracking within the dedicated scroll container
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
   // Smooth cinematic transitions driven by natural scrolling
-  // From 0 to 0.7: stable presentation; 0.7 to 1.0: gently scales down and dissolves away
+  // From 0 to 0.65: stable presentation; 0.65 to 1.0: gently scales down and dissolves away
   const opacity = useTransform(
     scrollYProgress,
     [0, 0.65, 0.95],
@@ -71,7 +89,7 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onExploreClick }
           aria-hidden="true"
         />
 
-        {/* Ambient Pulsing Back-Glow (Controlled and Behind the Artwork) */}
+        {/* Ambient Pulsing Back-Glow Behind the Video/Artwork */}
         <motion.div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] max-w-[900px] h-[55vh] max-h-[500px] rounded-full blur-[140px] pointer-events-none"
           style={{
@@ -89,7 +107,7 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onExploreClick }
           aria-hidden="true"
         />
 
-        {/* Cinematic Artwork Presentation Wrapper */}
+        {/* Cinematic Media Presentation Wrapper */}
         <motion.div
           style={{
             opacity: shouldReduceMotion ? undefined : opacity,
@@ -108,18 +126,34 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onExploreClick }
             }}
             className="relative w-full h-full flex items-center justify-center select-none"
           >
-            {/* The EXACT Uploaded Reference Image Asset - No cropping, no redraw */}
-            <img
-              src="/assets/aistudio/image_f75046db.png"
-              alt="Harpalani Ventures - Building What Comes Next."
-              className="w-full h-full max-h-[76svh] object-contain object-center drop-shadow-[0_20px_50px_rgba(0,0,0,0.85)]"
-              loading="eager"
-              decoding="async"
-            />
+            {/* If reduced motion is requested or video errors, fallback to exact static artwork */}
+            {shouldReduceMotion || videoError ? (
+              <img
+                src="/assets/aistudio/image_f75046db.png"
+                alt="Harpalani Ventures - Building What Comes Next."
+                className="w-full h-full max-h-[76svh] object-contain object-center drop-shadow-[0_20px_50px_rgba(0,0,0,0.85)]"
+                loading="eager"
+                decoding="async"
+              />
+            ) : (
+              <video
+                ref={videoRef}
+                src="/assets/aistudio/animated_logo_watermark_removes_e9b6c2ba.mp4"
+                poster="/assets/aistudio/image_f75046db.png"
+                autoPlay
+                muted
+                playsInline
+                loop
+                preload="auto"
+                onError={() => setVideoError(true)}
+                className="w-full h-full max-h-[76svh] object-contain object-center drop-shadow-[0_20px_50px_rgba(0,0,0,0.85)] pointer-events-none"
+                aria-label="Harpalani Ventures Animated Corporate Logo"
+              />
+            )}
           </motion.div>
         </motion.div>
 
-        {/* Elegant Scroll-To-Explore Indicator (Outside the image artwork) */}
+        {/* Elegant Scroll-To-Explore Indicator (Outside the video artwork) */}
         <motion.div
           style={{
             opacity: shouldReduceMotion ? 1 : indicatorOpacity,
