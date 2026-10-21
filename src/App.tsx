@@ -135,6 +135,7 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeVenture, setActiveVenture] = useState<string>("01");
+  const [ventureFilter, setVentureFilter] = useState<string>("all");
 
   // Scroll Progress Tracking for the entire landing page
   const { scrollYProgress } = useScroll();
@@ -548,17 +549,48 @@ export default function App() {
               </div>
             </div>
 
+            {/* Interactive Category Filter Pills */}
+            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-10 pb-4 border-b border-[#32106B]/08">
+              <span className="text-[10px] font-sans-clean font-bold tracking-[0.22em] uppercase text-[#6F2DBD] mr-2">
+                FILTER ECOSYSTEM:
+              </span>
+              {[
+                { id: "all", label: "ALL VENTURES" },
+                { id: "Retail Designer Store", label: "RETAIL" },
+                { id: "Custom Stitching • Bridal & Ethnic Wear", label: "COUTURE" },
+                { id: "Brand Identity & Digital Marketing", label: "DIGITAL STUDIO" },
+                { id: "SaaS Product (Code Name)", label: "AI SOFTWARE" },
+              ].map((filter) => {
+                const isFilterActive = ventureFilter === filter.id;
+                return (
+                  <button
+                    key={filter.id}
+                    onClick={() => setVentureFilter(filter.id)}
+                    className={`px-4 py-1.5 rounded-full text-[11px] font-sans-clean font-semibold tracking-wider transition-all duration-300 cursor-pointer ${
+                      isFilterActive
+                        ? "bg-[#32106B] text-white shadow-[0_4px_14px_rgba(50,16,107,0.25)] scale-105"
+                        : "bg-[#F8F6FB] text-[#17131D]/75 hover:bg-[#EDE5F7] hover:text-[#32106B]"
+                    }`}
+                  >
+                    {filter.label}
+                  </button>
+                );
+              })}
+            </div>
+
             {/* Editorial Venture Cards */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
-              {VENTURES_DATA.map((venture, idx) => {
+              {VENTURES_DATA
+                .filter((v) => ventureFilter === "all" || v.category === ventureFilter)
+                .map((venture, idx) => {
                 const isSelected = activeVenture === venture.id;
                 return (
                   <motion.div
                     key={venture.id}
+                    layout
                     initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-40px" }}
-                    transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: idx * 0.06 }}
                     onMouseEnter={() => setActiveVenture(venture.id)}
                     className={`p-8 sm:p-10 rounded-2xl border transition-all duration-300 flex flex-col justify-between ${
                       isSelected
