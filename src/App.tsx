@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import HarpalaniLogo from "./components/HarpalaniLogo";
 import HeroThreeNetwork from "./components/HeroThreeNetwork";
+import CinematicIntro from "./components/CinematicIntro";
 
 // Verified Venture Portfolio Data
 const VENTURES_DATA = [
@@ -167,9 +168,12 @@ export default function App() {
   // Scroll listener for minimal luxury navigation elevation
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 24);
+      // Reveal the sticky navbar as the user scrolls into the main website
+      const threshold = window.innerHeight * 0.45;
+      setScrolled(window.scrollY > threshold);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -226,14 +230,26 @@ export default function App() {
       </div>
 
       {/* ===================================================
+          1. CINEMATIC ANIMATED OPENING SCREEN (Exact Logo Image)
+      =================================================== */}
+      <CinematicIntro 
+        onExploreClick={() => {
+          const mainEl = document.getElementById("main-content");
+          if (mainEl) {
+            mainEl.scrollIntoView({ behavior: "smooth" });
+          }
+        }} 
+      />
+
+      {/* ===================================================
           2. ENTERPRISE HEADER & NAVIGATION
       =================================================== */}
       <header
         id="navbar"
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
           scrolled
-            ? "bg-white/94 backdrop-blur-md border-b border-[#32106B]/10 py-3.5 shadow-[0_2px_24px_-8px_rgba(50,16,107,0.08)]"
-            : "bg-white border-b border-[#32106B]/06 py-5"
+            ? "translate-y-0 opacity-100 pointer-events-auto bg-white/94 backdrop-blur-md border-b border-[#32106B]/10 py-3.5 shadow-[0_2px_24px_-8px_rgba(50,16,107,0.08)]"
+            : "-translate-y-full opacity-0 pointer-events-none py-5"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 flex items-center justify-between h-14 sm:h-16">
@@ -364,7 +380,7 @@ export default function App() {
       </header>
 
       {/* Main Content Container */}
-      <main className="flex-1 pt-24 sm:pt-28">
+      <main id="main-content" className="flex-1 pt-20 sm:pt-24">
         
         {/* ===================================================
             3. HERO SECTION — EDITORIAL EXCELLENCE & 3D NETWORK
