@@ -185,22 +185,7 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onExploreClick }
           </div>
         )}
 
-        {/* Floating Interactive Venture Quick Peek Tags in Intro corners */}
-        <motion.div
-          style={{ opacity: shouldReduceMotion ? 1 : indicatorOpacity }}
-          className="hidden lg:flex absolute top-8 left-8 z-20 items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#17131D]/60 backdrop-blur-md border border-white/10 text-white/80 text-[10px] font-sans-clean tracking-wider"
-        >
-          <Sparkles className="w-3 h-3 text-[#C084FC]" />
-          <span>Pvt. Ltd. Diversified Portfolio</span>
-        </motion.div>
 
-        <motion.div
-          style={{ opacity: shouldReduceMotion ? 1 : indicatorOpacity }}
-          className="hidden lg:flex absolute top-8 right-8 z-20 items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#17131D]/60 backdrop-blur-md border border-white/10 text-white/80 text-[10px] font-sans-clean tracking-wider"
-        >
-          <Compass className="w-3 h-3 text-[#C084FC]" />
-          <span>Established 2026</span>
-        </motion.div>
 
         {/* Elegant Scroll-To-Explore Indicator with pulsing ring */}
         <motion.div
