@@ -16,6 +16,8 @@ html {
   scroll-behavior: smooth;
   color: #17131D;
   background-color: #FFFFFF;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
@@ -23,6 +25,7 @@ body {
   overflow-x: hidden;
   background-color: #FFFFFF;
   color: #17131D;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Custom font utility classes */

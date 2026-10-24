@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence, useReducedMotion, useScroll, useSpring } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import { 
   ArrowRight, 
   ArrowUpRight, 
@@ -140,10 +140,15 @@ export default function App() {
   // Scroll Progress Tracking for the entire landing page
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
-    stiffness: 140,
+    stiffness: 100,
     damping: 30,
     restDelta: 0.001,
   });
+
+  // Subtle Parallax offsets for background glows and decorative watermarks
+  const heroGlowY = useTransform(scrollYProgress, [0, 0.4], [0, 45]);
+  const heroGlowYReverse = useTransform(scrollYProgress, [0, 0.4], [0, -35]);
+  const hvWatermarkY = useTransform(scrollYProgress, [0.5, 0.9], [-25, 25]);
 
   // Contact Form State
   const [formData, setFormData] = useState({
@@ -390,9 +395,15 @@ export default function App() {
           id="hero"
           className="relative w-full bg-[#FFFFFF] overflow-hidden pt-12 pb-20 sm:pt-20 sm:pb-28 lg:pt-24 lg:pb-32 border-b border-[#32106B]/06"
         >
-          {/* Architectural Ambient Glow */}
-          <div className="absolute top-0 right-0 w-[55vw] h-[55vw] rounded-full bg-gradient-to-bl from-[#EDE5F7]/70 via-[#F8F6FB]/40 to-transparent blur-3xl pointer-events-none -z-0" />
-          <div className="absolute -bottom-24 -left-20 w-[35vw] h-[35vw] rounded-full bg-[#EDE5F7]/35 blur-3xl pointer-events-none -z-0" />
+          {/* Architectural Ambient Glow with Subtle Parallax Depth */}
+          <motion.div 
+            style={{ y: shouldReduceMotion ? 0 : heroGlowY }}
+            className="absolute top-0 right-0 w-[55vw] h-[55vw] rounded-full bg-gradient-to-bl from-[#EDE5F7]/70 via-[#F8F6FB]/40 to-transparent blur-3xl pointer-events-none -z-0" 
+          />
+          <motion.div 
+            style={{ y: shouldReduceMotion ? 0 : heroGlowYReverse }}
+            className="absolute -bottom-24 -left-20 w-[35vw] h-[35vw] rounded-full bg-[#EDE5F7]/35 blur-3xl pointer-events-none -z-0" 
+          />
 
           <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-center">
@@ -495,23 +506,35 @@ export default function App() {
           <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
             
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-              <div className="lg:col-span-5">
+              <motion.div 
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                className="lg:col-span-5"
+              >
                 <span className="text-xs font-bold tracking-[0.28em] text-[#6F2DBD] uppercase font-sans-clean block mb-4">
                   GROUP OVERVIEW
                 </span>
                 <h2 className="font-serif-luxury font-normal text-3xl sm:text-4xl lg:text-5xl text-[#17131D] leading-[1.14] tracking-tight">
                   Where strategic vision meets focused execution.
                 </h2>
-              </div>
+              </motion.div>
 
-              <div className="lg:col-span-7 space-y-6 text-base sm:text-lg lg:text-xl text-[#17131D]/80 leading-relaxed font-light font-sans-clean">
+              <motion.div 
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="lg:col-span-7 space-y-6 text-base sm:text-lg lg:text-xl text-[#17131D]/80 leading-relaxed font-light font-sans-clean"
+              >
                 <p>
                   Harpalani Ventures Pvt. Ltd. operates as a parent venture group stewarding a curated portfolio of businesses. We combine entrepreneurial conviction with rigorous operating discipline to build sustainable value across physical retail, artisanal craftsmanship, creative digital agency services, and modern software products.
                 </p>
                 <p>
                   Every initiative within our group is developed with long-term resilience at its core—prioritizing enduring customer relationships, brand integrity, and thoughtful innovation over ephemeral market trends.
                 </p>
-              </div>
+              </motion.div>
             </div>
 
           </div>
@@ -527,7 +550,13 @@ export default function App() {
           <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
             
             {/* Portfolio Header */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-20">
+            <motion.div 
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-20"
+            >
               <div className="max-w-2xl text-left">
                 <span className="text-xs font-bold tracking-[0.3em] text-[#6F2DBD] uppercase font-sans-clean block mb-3">
                   VENTURE ECOSYSTEM
@@ -547,10 +576,16 @@ export default function App() {
                   4 Verified Group Ventures
                 </span>
               </div>
-            </div>
+            </motion.div>
 
             {/* Interactive Category Filter Pills */}
-            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-10 pb-4 border-b border-[#32106B]/08">
+            <motion.div 
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-10 pb-4 border-b border-[#32106B]/08"
+            >
               <span className="text-[10px] font-sans-clean font-bold tracking-[0.22em] uppercase text-[#6F2DBD] mr-2">
                 FILTER ECOSYSTEM:
               </span>
@@ -576,7 +611,7 @@ export default function App() {
                   </button>
                 );
               })}
-            </div>
+            </motion.div>
 
             {/* Editorial Venture Cards */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
@@ -588,9 +623,10 @@ export default function App() {
                   <motion.div
                     key={venture.id}
                     layout
-                    initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: idx * 0.06 }}
+                    initial={shouldReduceMotion ? false : { opacity: 0, y: 22 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
                     onMouseEnter={() => setActiveVenture(venture.id)}
                     className={`p-8 sm:p-10 rounded-2xl border transition-all duration-300 flex flex-col justify-between ${
                       isSelected
@@ -773,7 +809,13 @@ export default function App() {
         >
           <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
             
-            <div className="max-w-3xl mb-16 sm:mb-24 text-left">
+            <motion.div 
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="max-w-3xl mb-16 sm:mb-24 text-left"
+            >
               <span className="text-xs font-bold tracking-[0.3em] text-[#6F2DBD] uppercase font-sans-clean block mb-3">
                 STRATEGIC FOCUS
               </span>
@@ -783,14 +825,18 @@ export default function App() {
               <p className="font-sans-clean text-base sm:text-lg text-[#17131D]/70 leading-relaxed font-light">
                 How our group approaches venture creation, commercial development, and long-term operations.
               </p>
-            </div>
+            </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {STRATEGIC_CAPABILITIES.map((cap) => {
+              {STRATEGIC_CAPABILITIES.map((cap, idx) => {
                 const Icon = cap.icon;
                 return (
-                  <div
+                  <motion.div
                     key={cap.title}
+                    initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
                     className="p-8 rounded-xl bg-[#F8F6FB]/80 border border-[#32106B]/10 hover:border-[#32106B]/25 transition-all duration-300 flex flex-col justify-between"
                   >
                     <div>
@@ -807,7 +853,7 @@ export default function App() {
                         {cap.description}
                       </p>
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
@@ -824,7 +870,13 @@ export default function App() {
         >
           <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
             
-            <div className="max-w-3xl mb-16 sm:mb-24 text-left">
+            <motion.div 
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="max-w-3xl mb-16 sm:mb-24 text-left"
+            >
               <span className="text-xs font-bold tracking-[0.3em] text-[#6F2DBD] uppercase font-sans-clean block mb-3">
                 METHODOLOGY
               </span>
@@ -834,11 +886,18 @@ export default function App() {
               <p className="font-sans-clean text-base sm:text-lg text-[#17131D]/70 leading-relaxed font-light">
                 A structured four-stage discipline guiding each idea from conception to execution.
               </p>
-            </div>
+            </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 relative">
               {BUILDING_METHODOLOGY.map((stage, idx) => (
-                <div key={stage.step} className="flex flex-col relative text-left">
+                <motion.div 
+                  key={stage.step}
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex flex-col relative text-left"
+                >
                   
                   {/* Connecting Line (Desktop) */}
                   {idx < BUILDING_METHODOLOGY.length - 1 && (
@@ -861,7 +920,7 @@ export default function App() {
                   <p className="font-sans-clean text-sm text-[#17131D]/70 leading-relaxed font-normal">
                     {stage.description}
                   </p>
-                </div>
+                </motion.div>
               ))}
             </div>
 
@@ -910,15 +969,22 @@ export default function App() {
           id="about"
           className="relative w-full bg-[#FFFFFF] py-24 sm:py-32 border-b border-[#32106B]/08 overflow-hidden"
         >
-          <div 
+          <motion.div 
+            style={{ y: shouldReduceMotion ? 0 : hvWatermarkY }}
             className="absolute -right-16 top-1/2 -translate-y-1/2 font-serif-luxury text-[360px] font-bold text-[#32106B]/[0.025] select-none pointer-events-none leading-none z-0"
             aria-hidden="true"
           >
             HV
-          </div>
+          </motion.div>
 
           <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
-            <div className="max-w-3xl text-left">
+            <motion.div 
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              className="max-w-3xl text-left"
+            >
               
               <span className="text-xs font-bold tracking-[0.3em] text-[#6F2DBD] uppercase font-sans-clean block mb-4">
                 ABOUT HARPALANI VENTURES
@@ -939,27 +1005,42 @@ export default function App() {
 
               {/* Group Core Values */}
               <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8 border-t border-[#32106B]/10">
-                <div>
+                <motion.div
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                >
                   <h4 className="font-serif-luxury text-lg text-[#17131D] mb-1 font-medium">Authenticity</h4>
                   <p className="text-xs font-sans-clean text-[#17131D]/70 leading-relaxed">
                     Upholding genuine craftsmanship and transparency in every customer touchpoint.
                   </p>
-                </div>
-                <div>
+                </motion.div>
+                <motion.div
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
                   <h4 className="font-serif-luxury text-lg text-[#17131D] mb-1 font-medium">Precision</h4>
                   <p className="text-xs font-sans-clean text-[#17131D]/70 leading-relaxed">
                     Disciplined execution from bespoke physical couture to software architectures.
                   </p>
-                </div>
-                <div>
+                </motion.div>
+                <motion.div
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                >
                   <h4 className="font-serif-luxury text-lg text-[#17131D] mb-1 font-medium">Long-Term Value</h4>
                   <p className="text-xs font-sans-clean text-[#17131D]/70 leading-relaxed">
                     Building businesses engineered to stand the test of time and market evolutions.
                   </p>
-                </div>
+                </motion.div>
               </div>
 
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -974,7 +1055,13 @@ export default function App() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
               
               {/* Left Column: Direct Corporate Contacts */}
-              <div className="lg:col-span-5 flex flex-col text-left">
+              <motion.div 
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="lg:col-span-5 flex flex-col text-left"
+              >
                 <span className="text-xs font-bold tracking-[0.3em] text-[#6F2DBD] uppercase font-sans-clean block mb-3">
                   CONNECT WITH THE GROUP
                 </span>
@@ -1053,10 +1140,16 @@ export default function App() {
                   </div>
                 </div>
 
-              </div>
+              </motion.div>
 
               {/* Right Column: Corporate Dialogue Form */}
-              <div className="lg:col-span-7">
+              <motion.div 
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                className="lg:col-span-7"
+              >
                 {submittedQuery ? (
                   <div className="p-8 sm:p-12 border border-[#32106B]/20 bg-[#F8F6FB] rounded-2xl text-center space-y-4 shadow-sm">
                     <div className="w-14 h-14 rounded-full bg-[#EDE5F7] border border-[#32106B]/20 flex items-center justify-center mx-auto text-[#32106B]">
@@ -1243,7 +1336,7 @@ export default function App() {
                     </div>
                   </form>
                 )}
-              </div>
+              </motion.div>
 
             </div>
           </div>
